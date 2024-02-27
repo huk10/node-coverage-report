@@ -1,15 +1,15 @@
 name: Node coverage report
-description: This action updates or adds SVG badge to your wiki. Support for vitest and jest.
+description: This action updates or adds SVG badge to your wiki.
 branding:
   color: blue
   icon: award
 
 inputs:
   script:
-    description: Commands that can generate output coverage.
+    description: A test command that should be able to output test coverage.
     default: npm run test:coverage
   coverage-dir:
-    description: Directory of generated coverage files.
+    description: Test coverage file output directory.
     default: coverage
   output-dir:
     description: Custom output directory for the badge. By default, the wiki's root directory.
