@@ -5,7 +5,7 @@ branding:
   icon: award
 
 inputs:
-  script:
+  command:
     description: A test command that should be able to output test coverage.
     default: npm run test:coverage
   coverage-dir:
@@ -40,7 +40,7 @@ runs:
     - name: Generate coverage report
       shell: bash
       env:
-        INPUT_SCRIPT: ${{inputs.script}}
+        INPUT_COMMAND: ${{inputs.command}}
         INPUT_COVERAGE_DIR: ${{inputs.coverage-dir}}
         INPUT_BADGE_STYLE: ${{inputs.badge-style}}
         INPUT_BADGE_TITLE: ${{inputs.badge-title}}

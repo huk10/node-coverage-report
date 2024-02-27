@@ -2,13 +2,13 @@
 set -euo pipefail
 
 OUTPUT="$1"
-SCRIPT="${INPUT_SCRIPT-}"
+COMMAND="${INPUT_COMMAND-}"
 COVERAGE_DIR="${INPUT_COVERAGE_DIR-}"
 
 mkdir -p "$OUTPUT"
 
-if [ -z "$SCRIPT" ]; then
-  SCRIPT="npm run test:coverage"
+if [ -z "$COMMAND" ]; then
+  COMMAND="npm run test:coverage"
 fi
 
 if [ -z "$COVERAGE_DIR" ]; then
@@ -16,18 +16,22 @@ if [ -z "$COVERAGE_DIR" ]; then
 fi
 
 # Extract total coverage: the decimal number from the last line of the function report.
-# Give priority to taking values from json files
-TEST_RESULT=$(eval "$SCRIPT")
+# Read the file directly if it already exists
 if [ -f "./$COVERAGE_DIR/coverage-summary.json" ]; then
   COVERAGE=$(< "./$COVERAGE_DIR/coverage-summary.json" jq .total.statements.pct)
 else
-  # Try to take a value from the command output，
-  COVERAGE=$(echo "$TEST_RESULT" | grep "Statements" | grep -oE '[0-9]+\.[0-9]+%')
-  # Remove the percent sign
-  COVERAGE=${COVERAGE%?}
+  # If no file exists, execute the command to try to generate the file.
+  TEST_RESULT=$(eval "$COMMAND")
+  if [ -f "./$COVERAGE_DIR/coverage-summary.json" ]; then
+    COVERAGE=$(< "./$COVERAGE_DIR/coverage-summary.json" jq .total.statements.pct)
+  else
+    # Try to take a value from the command output，
+    COVERAGE=$(echo "$TEST_RESULT" | grep "Statements" | grep -oE '[0-9]+\.[0-9]+%')
+    COVERAGE=${COVERAGE%?}
+  fi
 fi
 
-# Can not get a value to exit
+# Unable to get test coverage data
 if [ -z "$COVERAGE" ]; then
   exit 2
 fi
