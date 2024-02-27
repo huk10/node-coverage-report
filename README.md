@@ -73,13 +73,13 @@ jobs:
         node-version: [ 20 ]
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
       - name: Install dependencies
         run: pnpm install
       - name: Update coverage badge
@@ -87,7 +87,7 @@ jobs:
         with:
           amend: true
         if: |
-          matrix.os == 'ubuntu-latest' && github.event_name == 'push'
+          github.event_name == 'push'
         continue-on-error: true
 ```
 
