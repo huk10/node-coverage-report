@@ -3,7 +3,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/huk10/node-coverage-report/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/huk10/node-coverage-report.svg?style=flat-square)](https://github.com/huk10/node-coverage-report/releases)
 
-A GitHub Action to add a coverage [badge][badge] to your JavaScript repo. 
+A GitHub Action to add a coverage [badge][badge] to your JavaScript repo.
 Part of the code comes from [go-coverage-report](https://github.com/ncruces/go-coverage-report).
 
 ## How works
@@ -90,6 +90,10 @@ To add a coverage badge to your `README.md`, use this Markdown snippet:
 ```markdown
 ![](https://github.com/USER/REPO/wiki/coverage.svg)
 ```
+
+## License
+
+The scripts and documentation in this project are released under the [MIT License](./LICENSE)
 
 [badge]: https://github.com/huk10/esdi/wiki/coverage.svg
 
